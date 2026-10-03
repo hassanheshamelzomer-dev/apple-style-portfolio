@@ -1,0 +1,82 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+/* ── Apple HIG Design Tokens ───────────────────────────────────────── */
+@theme {
+  --color-apple-blue:    #007AFF;
+  --color-apple-indigo:  #5856D6;
+  --color-apple-cyan:    #32ADE6;
+  --color-apple-mint:    #30B0C7;
+
+  --color-apple-bg-light:    #F5F5F7;
+  --color-apple-bg-dark:     #000000;
+  --color-apple-bg-dark-alt: #1C1C1E;
+
+  --font-sans: -apple-system, BlinkMacSystemFont, 'SF Pro Display',
+               'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* ── Base Layer ─────────────────────────────────────────────────────── */
+@layer base {
+  html {
+    @apply scroll-smooth;
+    /* Custom scrollbar */
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0,0,0,0.15) transparent;
+  }
+  html.dark {
+    scrollbar-color: rgba(255,255,255,0.12) transparent;
+  }
+
+  /* WebKit custom scrollbar */
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(0,0,0,0.12);
+    border-radius: 99px;
+  }
+  html.dark ::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.10);
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(0,122,255,0.35);
+  }
+
+  body {
+    @apply font-sans antialiased
+      bg-[#F5F5F7] text-zinc-900
+      dark:bg-black dark:text-zinc-100;
+  }
+
+  /* ── Utility classes ─────────────────────────────────────────────── */
+
+  /* Glass panel — light & dark */
+  .glass-panel {
+    @apply
+      bg-white/80 dark:bg-zinc-900/80
+      backdrop-blur-md
+      border border-black/5 dark:border-white/10
+      shadow-xl shadow-black/5 dark:shadow-black/50;
+  }
+
+  /* Apple spring interaction */
+  .apple-interaction {
+    @apply hover:scale-[1.02] active:scale-[0.98] transition-transform duration-300 ease-out;
+  }
+
+  /* Section header accent label */
+  .section-label {
+    @apply text-xs font-semibold tracking-[0.18em] uppercase text-[#007AFF] mb-3;
+  }
+
+  /* Scroll-reveal — set by JS via IntersectionObserver */
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.55s cubic-bezier(.22,1,.36,1),
+                transform 0.55s cubic-bezier(.22,1,.36,1);
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
