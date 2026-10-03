@@ -85,14 +85,17 @@ const Contact = () => {
     e.preventDefault();
     setStatus('sending');
     try {
+      const templateParams = {
+        user_name: fields.name,
+        user_email: fields.email,
+        message: fields.message,
+        reply_to: fields.email
+      };
+
       await emailjs.send(
         SERVICE_ID, 
         TEMPLATE_ID, 
-        {
-          user_email: fields.email,
-          user_name: fields.name,
-          message: fields.message
-        }, 
+        templateParams,
         PUBLIC_KEY
       );
       setStatus('success');
