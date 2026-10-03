@@ -85,7 +85,16 @@ const Contact = () => {
     e.preventDefault();
     setStatus('sending');
     try {
-      await emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, formRef.current, PUBLIC_KEY);
+      await emailjs.send(
+        SERVICE_ID, 
+        TEMPLATE_ID, 
+        {
+          user_email: fields.email,
+          user_name: fields.name,
+          message: fields.message
+        }, 
+        PUBLIC_KEY
+      );
       setStatus('success');
       setFields({ name: '', email: '', message: '' });
     } catch {
